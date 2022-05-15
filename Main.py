@@ -1,7 +1,8 @@
 # imporing Modules
 import Data_Cleaning
 import Logistic_Regression
-#Soon SVM , ID3 Modules will be imported !
+import Decision_Tree
+#Soon SVM Module will be imported !
 
 
 #Data Cleaning & Preprocessing :-
@@ -73,12 +74,13 @@ elif(Property_Area.lower() == 'rural'):
 elif(Property_Area.lower() == 'semiurban'):
     Property_Area = 2
 else:
-    print('Invalid Property it will be "Urban" by default')
-    Property_Area = 0
+    print('it seems to be another Area , it will be Added')
+    Property_Area = 3
 
 #Collecting them into on Variable :-
 features = [[Gender,Married,Dependents,Education,Self_Employed,ApplicantIncome,CoapplicantIncome,LoanAmount,Loan_Amount_Term,Credit_History,Property_Area]]
 
 #Using Different Models for Prediction :-
 Logistic_Regression.Logistic_Preddiction(loan_Df,features)
-#soon SVM , ID3 Will be Added !
+Decision_Tree.Decision_Tree(loan_Df, features)
+#soon SVM Will be Called !
