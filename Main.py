@@ -73,8 +73,8 @@ elif(Property_Area.lower() == 'rural'):
 elif(Property_Area.lower() == 'semiurban'):
     Property_Area = 2
 else:
-    print('it seems to be another Area , it will be Added')
-    Property_Area = 3
+    print('Invalid Property it will be "Urban" by default')
+    Property_Area = 0
 
 #Collecting them into on Variable :-
 features = [[Gender,Married,Dependents,Education,Self_Employed,ApplicantIncome,CoapplicantIncome,LoanAmount,Loan_Amount_Term,Credit_History,Property_Area]]
