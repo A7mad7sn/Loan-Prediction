@@ -2,8 +2,7 @@
 import Data_Cleaning
 import Logistic_Regression
 import Decision_Tree
-#Soon SVM Module will be imported !
-
+import SVM
 
 #Data Cleaning & Preprocessing :-
 loan_Df = Data_Cleaning.Data_Cleaning()
@@ -83,4 +82,4 @@ features = [[Gender,Married,Dependents,Education,Self_Employed,ApplicantIncome,C
 #Using Different Models for Prediction :-
 Logistic_Regression.Logistic_Preddiction(loan_Df,features)
 Decision_Tree.Decision_Tree(loan_Df, features)
-#soon SVM Will be Called !
+SVM.svm_prediction(loan_Df, features)
