@@ -7,7 +7,7 @@ pd.set_option('display.max_rows', 900)
 pd.set_option('display.max_columns', 15)
 pd.set_option('display.width', 8000)
 pd.set_option('display.max_colwidth', 8000)
-def Data_Cleaning():
+def Preprocessing():
     
     #Data reading from the file :- 
     loan_Df = pd.read_csv("loan_data.csv")

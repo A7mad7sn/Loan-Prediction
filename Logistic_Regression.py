@@ -2,17 +2,16 @@
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn import metrics
-
-def Logistic_Preddiction(loan_Df,features):
+def Logistic_algorirthm(loan_Df):
     print ('--------------------------------------------------------------------------')
     print ('Using Logistic Regression :-')
     print ('------------------------------')
     #Variables and Features :-
-    x = loan_Df[["Gender","Married","Dependents","Education","Self_Employed","ApplicantIncome","CoapplicantIncome","LoanAmount","Loan_Amount_Term","Credit_History","Property_Area"]].values
+    x = loan_Df.iloc[:,1:12].values
     y = loan_Df["Loan_Status"].values
     
     #Data Splitting :-
-    x_train, x_test, y_train, y_test = train_test_split(x, y)
+    x_train, x_test, y_train, y_test = train_test_split(x, y,random_state=44,test_size=0.1,shuffle=True)
     
     #Data Training :-
     loan_Model = LogisticRegression()
@@ -21,6 +20,6 @@ def Logistic_Preddiction(loan_Df,features):
     #Prediction for printing accuracy :-
     y_predict = loan_Model.predict(x_test)
     print('Logistic Regression accuracy for Loan Prediction = ', metrics.accuracy_score(y_predict,y_test))
-    y_predict = loan_Model.predict(features)
-    print("Prediction for Loan : ",y_predict)
+    print('Y _ Real : ',y_test)
+    print("Y _ Predicted : ",y_predict)
     print ('------------------------------------------------------------------------')
