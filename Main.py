@@ -1,11 +1,11 @@
 # imporing Modules
-import Data_Cleaning
+import Preprocessing
 import Logistic_Regression
 import Decision_Tree
 import SVM
 
 #Data Cleaning & Preprocessing :-
-loan_Df = Data_Cleaning.Data_Cleaning()
+loan_Df = Preprocessing.Data_Cleaning()
 
 #Getting Features from User :-
 print ('Enter Values : ' )
