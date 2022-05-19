@@ -11,7 +11,7 @@ def Logistic_algorirthm(loan_Df):
     y = loan_Df["Loan_Status"].values
     
     #Data Splitting :-
-    x_train, x_test, y_train, y_test = train_test_split(x, y,random_state=44,test_size=0.1,shuffle=True)
+    x_train, x_test, y_train, y_test = train_test_split(x, y)
     
     #Data Training :-
     loan_Model = LogisticRegression()
