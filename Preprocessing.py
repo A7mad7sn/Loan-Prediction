@@ -3,10 +3,13 @@ import math
 import pandas as pd 
 import numpy as np
 from sklearn.preprocessing import MaxAbsScaler
+from sklearn.preprocessing import LabelEncoder
+
 pd.set_option('display.max_rows', 900)
 pd.set_option('display.max_columns', 15)
 pd.set_option('display.width', 8000)
 pd.set_option('display.max_colwidth', 8000)
+
 def Preprocessing():
     
     #Data reading from the file :- 
@@ -15,32 +18,34 @@ def Preprocessing():
     #Filling Empty cells at Column"Gender"(Once'Male' , Once'Feamle') :-
     G_check = 0
     for i in loan_Df.index:
-        if loan_Df["Gender"][i] != 'Male' and loan_Df["Gender"][i] != 'Female':
+        if loan_Df.loc[i,"Gender"] != 'Male' and loan_Df.loc[i,"Gender"] != 'Female':
             if G_check % 2 == 0:
-                loan_Df["Gender"].replace(loan_Df["Gender"][i],'Male',inplace = True) 
+                loan_Df.loc[i,"Gender"] = 'Male'
                 G_check = G_check + 1
             else :
-                loan_Df["Gender"].replace(loan_Df["Gender"][i],'Female',inplace = True) 
+                loan_Df.loc[i,"Gender"] = 'Female'
                 G_check = G_check + 1
                 
     #Filling Empty cells at Column "Married" with 'No' :-
     loan_Df["Married"].fillna('No',inplace = True)
     
     #Replacing Wrong Data at Column "Dependents" :-
-    loan_Df["Dependents"].replace('3+',3,inplace = True)
-            
+    for i in loan_Df.index:
+        if loan_Df.loc[i,"Dependents"] == '3+':
+            loan_Df.loc[i,"Dependents"] = 3
+      
     #Filling Empty cells at Column"Dependents" with 0 :-
     loan_Df["Dependents"].fillna(0,inplace = True)
     
     #Filling Empty cells at Column"Self_Employed"(Once'Yes' , Once'No') :-
     SE_check = 0
     for i in loan_Df.index:
-        if loan_Df["Self_Employed"][i] != 'Yes' and loan_Df["Self_Employed"][i] != 'No':
+        if loan_Df.loc[i,"Self_Employed"] != 'Yes' and loan_Df.loc[i,"Self_Employed"] != 'No':
             if SE_check % 2 == 0:
-                loan_Df["Self_Employed"].replace(loan_Df["Self_Employed"][i],'Yes',inplace = True) 
+                loan_Df.loc[i, "Self_Employed"] = 'Yes'
                 SE_check = SE_check + 1
             else :
-                loan_Df["Self_Employed"].replace(loan_Df["Self_Employed"][i],'Yes',inplace = True) 
+                loan_Df.loc[i,"Self_Employed"] = 'No'
                 SE_check = SE_check + 1
                 
     #Filling Empty cells at Column"LoanAmount" with mean value :-
@@ -52,24 +57,27 @@ def Preprocessing():
     #Filling Empty cells at Column"Credit_History"(Once 1 , Once 0) :-
     CH_check = 0
     for i in loan_Df.index:
-        if loan_Df["Credit_History"][i] != 1 and loan_Df["Gender"][i] != 0:
+        if loan_Df.loc[i,"Credit_History"] != 1 and loan_Df.loc[i,"Credit_History"] != 0:
             if CH_check % 2 == 0:
-                loan_Df["Credit_History"].replace(loan_Df["Credit_History"][i],1,inplace = True) 
+                loan_Df.loc[i,"Credit_History"] = 1
                 CH_check = CH_check + 1
             else :
-                loan_Df["Credit_History"].replace(loan_Df["Credit_History"][i],0,inplace = True) 
+                loan_Df.loc[i,"Credit_History"] = 0
                 CH_check = CH_check + 1
     
-    #Replacing String Values with Numeric Values at Columns("Gender","Married","Education","Self_Employed","Property_Area"):-
-    loan_Df["Gender"] = loan_Df["Gender"].map({'Male' : 1 , 'Female' : 0})
-    loan_Df["Married"] = loan_Df["Married"].map({'Yes' : 1 , 'No' : 0})
-    loan_Df["Education"] = loan_Df["Education"].map({'Graduate' : 1 , 'Not Graduate' : 0})
-    loan_Df["Self_Employed"] = loan_Df["Self_Employed"].map({'Yes' : 1 , 'No' : 0})
-    loan_Df["Property_Area"] = loan_Df["Property_Area"].map({'Urban' : 0 , 'Rural' : 1 , 'Semiurban' : 2})
+    #Encoding ("Gender","Married","Education","Self_Employed","Property_Area"):-
+    X = loan_Df.iloc[:,1:12]
+    cols = ['Gender','Married','Education','Self_Employed','Property_Area']
+    for c in cols:
+        lbl = LabelEncoder()
+        X[c] = lbl.fit_transform(list(X[c].values))
+    loan_Df.iloc[:,1:12] = X  
     
     #Data Sclaing :-
     data_for_scale =  np.array(loan_Df.iloc[:,6:10])
-    transformer = MaxAbsScaler()
-    data_for_scale = transformer.fit_transform(data_for_scale)
+    Scaler = MaxAbsScaler()
+    data_for_scale = Scaler.fit_transform(data_for_scale)
     loan_Df.iloc[:,6:10] = data_for_scale
+    
+    
     return loan_Df          
