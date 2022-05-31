@@ -80,4 +80,5 @@ def Preprocessing():
     loan_Df.iloc[:,6:10] = data_for_scale
     
     
+    
     return loan_Df          
