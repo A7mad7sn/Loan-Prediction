@@ -1,4 +1,4 @@
-# imporing Modules
+# importing Modules
 import Preprocessing
 import Feature_Selection_Splitting
 import Logistic_Regression
